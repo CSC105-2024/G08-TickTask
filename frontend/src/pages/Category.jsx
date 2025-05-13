@@ -504,9 +504,9 @@ const handleDeleteTask = (taskToDelete) => {
                         openEditModal(selected);
                         closeMenu();
                       }}
-                      className="flex items-center px-3 py-2 hover:bg-gray-100 w-full text-sm"
+                      className="flex items-center px-3 py-2 hover:bg-gray-100 w-full "
                     >
-                      <span className="w-full text-left">Edit</span>
+                      <span className="w-16 h-7 font-bold text-lg  px-4 hover:bg-gray-200 ">Edit</span>
                     </button>
                   </div>
                 )}
