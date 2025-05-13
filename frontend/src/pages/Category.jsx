@@ -26,6 +26,7 @@ import DeleteCategoryModal from "../components/modals/DeleteCategoryModal.jsx";
 import AddCategoryModal from "../components/modals/AddCategoryModal.jsx";
 import EditCategoryModal from "../components/modals/EditCategoryModal.jsx";
 import TaskSettingModal from "../components/modals/TaskSettingModal.jsx";
+import DeleteTaskModal from "../components/modals/DeleteTaskModal.jsx";
 const initialCategories = [
   {
     name: "All",
@@ -357,7 +358,10 @@ export default function Category() {
   const handleAddCategory = () => {
     setAddModalOpen(true);
   };
-
+const handleDeleteTask = (taskToDelete) => {
+  setTasks(tasks.filter(task => task.id !== taskToDelete.id));
+  setEditingTask(null);
+};
   const confirmDeleteCategory = () => {
     if (categoryToDelete) {
       setCategories(categories.filter((cat) => cat.name !== categoryToDelete));
@@ -581,31 +585,34 @@ export default function Category() {
                     <img src={edit} alt="Menu" className="w-4 h-4" />
                   </button>
                   {menuOpen === cat.name && (
-                    <div className="absolute top-8 right-1 bg-white border border-black rounded-lg shadow-lg z-10 w-24">
-                      <button
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          openEditModal(cat);
-                          closeMenu();
-                        }}
-                        className="font-bold w-full px-2 py-1 hover:bg-gray-200 "
-                      >
-                        Edit
-                      </button>
-                      <div className="border-t border-gray-300"></div>
-                      <button
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          handleDeleteCategory(cat.name);
-                          closeMenu();
-                        }}
-                        className="font-bold w-full px-2 py-1 hover:bg-gray-200"
-                      >
-                        Delete
-                      </button>
-                    </div>
-                  )}
-
+  <div className="absolute top-8 right-1 bg-white border border-black rounded-lg shadow-lg z-10 w-24">
+    <button
+      onClick={(e) => {
+        e.stopPropagation();
+        openEditModal(cat);
+        closeMenu();
+      }}
+      className="font-bold w-full px-2 py-1 hover:bg-gray-200 "
+    >
+      Edit
+    </button>
+    {cat.name !== "All" && (
+      <>
+        <div className="border-t border-gray-300"></div>
+        <button
+          onClick={(e) => {
+            e.stopPropagation();
+            handleDeleteCategory(cat.name);
+            closeMenu();
+          }}
+          className="font-bold w-full px-2 py-1 hover:bg-gray-200"
+        >
+          Delete
+        </button>
+      </>
+    )}
+  </div>
+)}
                   <img
                     src={cat.icon}
                     alt={`${cat.name} icon`}
@@ -836,6 +843,7 @@ export default function Category() {
               task={editingTask}
               onSave={handleSaveTask}
               onClose={() => setEditingTask(null)}
+              onDelete={handleDeleteTask}
               categories={categories.map((cat) => cat.name)}
             />
           </div>

@@ -7,8 +7,9 @@ import close from "../../assets/close.svg";
 import AddToCate from "../../assets/AddToCate.svg";
 import CustomColor from "../../assets/CustomColor.svg";
 import iconSmile from "../../assets/iconSmile.svg";
+import DeleteTaskModal from "./DeleteTaskModal.jsx";
 
-const TaskSettingModal = ({ task, onSave, onClose }) => {
+const TaskSettingModal = ({ task, onSave, onClose, onDelete }) => {
   const [title, setTitle] = useState(task.title || "");
   const [startDate, setStartDate] = useState(task.startDate || "");
   const [endDate, setEndDate] = useState(task.endDate || "");
@@ -26,6 +27,7 @@ const TaskSettingModal = ({ task, onSave, onClose }) => {
   const [showStartTimePicker, setShowStartTimePicker] = useState(false);
   const [showEndTimePicker, setShowEndTimePicker] = useState(false);
   const [createdDate] = useState(new Date().toISOString().split("T")[0]);
+  const [deleteModalOpen, setDeleteModalOpen] = useState(false);
   const colorOptions = [
     null,
     "#F24726",
@@ -76,6 +78,14 @@ const TaskSettingModal = ({ task, onSave, onClose }) => {
 
   const handleColorSelect = (selectedColor) => {
     setColor(selectedColor);
+  };
+
+  const handleDelete = () => {
+    setDeleteModalOpen(true);
+  };
+  const confirmDelete = () => {
+    onDelete(task);
+    setDeleteModalOpen(false);
   };
 
   const toggleCategoryDropdown = () => {
@@ -277,6 +287,13 @@ const TaskSettingModal = ({ task, onSave, onClose }) => {
         <div className="flex">
           <button
             type="button"
+            onClick={handleDelete}
+            className="px-4 py-2 bg-red-400 rounded-lg border border-black font-bold hover:bg-red-500"
+          >
+            DELETE
+          </button>
+          <button
+            type="button"
             onClick={onClose}
             className="px-4 py-2 bg-gray-100 rounded-lg border border-black font-bold hover:bg-gray-200 ml-auto"
           >
@@ -300,6 +317,13 @@ const TaskSettingModal = ({ task, onSave, onClose }) => {
         />
       )}
 
+      {deleteModalOpen && (
+        <DeleteTaskModal
+          deleteModalOpen={deleteModalOpen}
+          setDeleteModalOpen={setDeleteModalOpen}
+          confirmDeleteTask={confirmDelete}
+        />
+      )}
       {showColorPickerModal && (
         <ColorPickerModal
           currentColor={color}
