@@ -13,7 +13,7 @@ function NotFoundPage() {
         <div className="w-full lg:w-1/2 flex justify-center items-center mb-1 lg:mb-0">
           <img
             src={Logo}
-            alt="Badminton racket and shuttle"
+            alt="logo"
             className="w-[250px] sm:w-[300px] lg:w-[480px] h-auto"
           />
         </div>
