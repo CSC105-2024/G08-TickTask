@@ -313,7 +313,7 @@ export default function Category() {
   const [editingCategory, setEditingCategory] = useState(null);
   const [editingTask, setEditingTask] = useState(null);
   const [menuOpen, setMenuOpen] = useState(null);
-  
+
   // Mobile state
   const isMobile = useMediaQuery({ maxWidth: 768 });
   const [showCategorySelection, setShowCategorySelection] = useState(isMobile);
@@ -395,16 +395,16 @@ export default function Category() {
       tasks.map((t) =>
         t.id === updatedTask.id
           ? {
-              ...t,
-              title: updatedTask.title,
-              description: updatedTask.description,
-              startTime: updatedTask.startTime,
-              endTime: updatedTask.endTime,
-              startDate: updatedTask.startDate,
-              endDate: updatedTask.endDate,
-              category: updatedTask.category,
-              icon: updatedTask.icon,
-            }
+            ...t,
+            title: updatedTask.title,
+            description: updatedTask.description,
+            startTime: updatedTask.startTime,
+            endTime: updatedTask.endTime,
+            startDate: updatedTask.startDate,
+            endDate: updatedTask.endDate,
+            category: updatedTask.category,
+            icon: updatedTask.icon,
+          }
           : t
       )
     );
@@ -458,14 +458,14 @@ export default function Category() {
             <h2 className="text-xl font-bold">Category</h2>
             {!isMobile && (
               <button onClick={handleAddCategory}
-              className="transition-all duration-200 hover:scale-110 ">
+                className="transition-all duration-200 hover:scale-110 ">
                 <img src={addcate} alt="Add Category" className="w-10 h-10 " />
               </button>
             )}
           </div>
 
           {isMobile && (
-            <button 
+            <button
               onClick={handleBackToCategories}
               className="mb-4 flex items-center text-sm font-medium"
               style={{ display: showTasks ? 'flex' : 'none' }}
@@ -592,17 +592,21 @@ export default function Category() {
                       >
                         Edit
                       </button>
-                      <div className="border-t border-gray-300"></div>
-                      <button
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          handleDeleteCategory(cat.name);
-                          closeMenu();
-                        }}
-                        className="font-bold w-full px-2 py-1 hover:bg-gray-200"
-                      >
-                        Delete
-                      </button>
+                      {cat.name !== "All" && (
+                        <>
+                          <div className="border-t border-gray-300"></div>
+                          <button
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              handleDeleteCategory(cat.name);
+                              closeMenu();
+                            }}
+                            className="font-bold w-full px-2 py-1 hover:bg-gray-200"
+                          >
+                            Delete
+                          </button>
+                        </>
+                      )}
                     </div>
                   )}
 
@@ -669,9 +673,8 @@ export default function Category() {
                       }}
                     >
                       <span
-                        className={`mr-2 ${
-                          filterType === "all" ? "font-bold" : ""
-                        }`}
+                        className={`mr-2 ${filterType === "all" ? "font-bold" : ""
+                          }`}
                       >
                         Show All
                       </span>
@@ -684,9 +687,8 @@ export default function Category() {
                       }}
                     >
                       <span
-                        className={`mr-2 ${
-                          filterType === "incomplete" ? "font-bold" : ""
-                        }`}
+                        className={`mr-2 ${filterType === "incomplete" ? "font-bold" : ""
+                          }`}
                       >
                         Incomplete
                       </span>
@@ -699,9 +701,8 @@ export default function Category() {
                       }}
                     >
                       <span
-                        className={`mr-2 ${
-                          filterType === "complete" ? "font-bold" : ""
-                        }`}
+                        className={`mr-2 ${filterType === "complete" ? "font-bold" : ""
+                          }`}
                       >
                         Complete
                       </span>
@@ -737,25 +738,22 @@ export default function Category() {
                         categories.find((c) => c.name === task.category)?.color ||
                         "#D4B4FF", filter: task.completed ? "grayscale(100%)" : "none"
                     }}
-                    className={`relative rounded-lg px-4 md:px-6 py-4 flex justify-between items-center shadow-sm border border-black cursor-pointer flex-grow  transition-all duration-200 hover:brightness-90 ${
-                      categories.find((c) => c.name === task.category)?.color ||
+                    className={`relative rounded-lg px-4 md:px-6 py-4 flex justify-between items-center shadow-sm border border-black cursor-pointer flex-grow  transition-all duration-200 hover:brightness-90 ${categories.find((c) => c.name === task.category)?.color ||
                       selected?.color
-                    }`}
+                      }`}
                   >
                     <div className="flex items-start gap-2">
                       <img src={task.icon} alt="icon" className="w-6 h-6 md:w-7 md:h-7 mt-1" />
                       <div>
                         <div
-                          className={`font-bold text-sm uppercase ${
-                            task.completed ? "line-through" : ""
-                          }`}
+                          className={`font-bold text-sm uppercase ${task.completed ? "line-through" : ""
+                            }`}
                         >
                           {task.title}
                         </div>
                         <div
-                          className={`text-xs text-black/80 ${
-                            task.completed ? "line-through" : ""
-                          }`}
+                          className={`text-xs text-black/80 ${task.completed ? "line-through" : ""
+                            }`}
                         >
                           {task.description}
                         </div>
@@ -827,7 +825,7 @@ export default function Category() {
           setEditModalOpen(false);
         }}
       />
-      
+
       {/* Edit Task Modal */}
       {editingTask && (
         <div className="fixed inset-0 bg-gray-800/30 flex items-center justify-center z-50 p-4">
