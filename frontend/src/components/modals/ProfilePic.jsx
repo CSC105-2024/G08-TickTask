@@ -3,16 +3,16 @@ import { Icon } from '@iconify/react';
 import Close from '../../assets/close.svg';
 import Camera from '@iconify-icons/lucide/camera';
 import Men1 from '../../assets/ProfilePics/men1.svg';
-import Men2 from '../../assets/ProfilePics/men 2.svg';
+import Men2 from '../../assets/ProfilePics/men2.svg';
 import Men3 from '../../assets/ProfilePics/men3.svg';
-import Men4 from '../../assets/ProfilePics/men 4.svg';
-import Men5 from '../../assets/ProfilePics/men 5.svg';
+import Men4 from '../../assets/ProfilePics/men4.svg';
+import Men5 from '../../assets/ProfilePics/men5.svg';
 import Men from '../../assets/ProfilePics/men.svg';
-import Women1 from '../../assets/ProfilePics/women 1.svg';
-import Women2 from '../../assets/ProfilePics/women 2.svg';
-import Women3 from '../../assets/ProfilePics/women 3.svg';
+import Women1 from '../../assets/ProfilePics/women1.svg';
+import Women2 from '../../assets/ProfilePics/women2.svg';
+import Women3 from '../../assets/ProfilePics/women3.svg';
 import Women from '../../assets/ProfilePics/women.svg';
-
+import { apiClient } from '../../util/apiClient';
 const pictures = [
   { name: 'Men1', src: Men1 },
   { name: 'Men2', src: Men2 },
@@ -40,35 +40,36 @@ function ProfilePic({ onClose, onSelect }) {
   };
 
   const handleSelect = (pic) => {
-    onSelect(pic); 
-    closeModal();   
+    onSelect(pic);
+    closeModal();
   };
 
   const handleUploadClick = () => {
-    fileInputRef.current.click(); 
+    fileInputRef.current.click();
   };
 
   const uploadToCloudinary = async (file) => {
-  const formData = new FormData();
-  formData.append("image", file);
+    const formData = new FormData();
+    formData.append('image', file);
 
-  const res = await fetch("http://localhost:3000/api/users/profile/upload-profile-pic", {
-    method: "POST",
-    body: formData,
-  });
+    const res = await apiClient.post(
+      '/api/users/profile/upload-profile-pic',
+      formData,
+      {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem('token')}`,
+        },
+      },
+    );
 
-  const result = await res.json();
+    const result = await res.json();
 
-  if (!res.ok) {
-    throw new Error(result.error || "Upload failed");
-  }
+    if (!res.ok) {
+      throw new Error(result.error || 'Upload failed');
+    }
 
-  return result.imageUrl; 
-};
-
-
-
-
+    return result.imageUrl;
+  };
 
   const handleFileChange = async (e) => {
     const file = e.target.files[0];
@@ -91,14 +92,12 @@ function ProfilePic({ onClose, onSelect }) {
 
     try {
       const imageUrl = await uploadToCloudinary(file);
-        onSelect({
-          name: 'custom',
-          src: imageUrl,
-          isCloudinary: true,
-        });
+      onSelect({
+        name: 'custom',
+        src: imageUrl,
+        isCloudinary: true,
+      });
 
-
-      
       closeModal();
     } catch (error) {
       console.error('Upload failed:', error);
@@ -110,8 +109,13 @@ function ProfilePic({ onClose, onSelect }) {
 
   return (
     <div className="fixed inset-0 flex items-center justify-center bg-black/50 z-50">
-      <div className={`bg-white p-10 w-[350px] sm:w-[450px] md:w-[480px] lg:w-[400px] max-h-[611px] overflow-y-auto rounded-lg shadow-lg relative ${isClosing ? 'animate-scale-out' : 'animate-scale-in'}`}>
-        <div className="absolute top-4 right-4 cursor-pointer hover:scale-105" onClick={closeModal}>
+      <div
+        className={`bg-white p-10 w-[350px] sm:w-[450px] md:w-[480px] lg:w-[400px] max-h-[611px] overflow-y-auto rounded-lg shadow-lg relative ${isClosing ? 'animate-scale-out' : 'animate-scale-in'}`}
+      >
+        <div
+          className="absolute top-4 right-4 cursor-pointer hover:scale-105"
+          onClick={closeModal}
+        >
           <img src={Close} alt="Close" className="h-6 w-6" />
         </div>
 
@@ -131,7 +135,7 @@ function ProfilePic({ onClose, onSelect }) {
                 />
               </div>
             ))}
-            
+
             {/* Upload circle */}
             <div
               onClick={!isUploading ? handleUploadClick : undefined}
@@ -142,7 +146,11 @@ function ProfilePic({ onClose, onSelect }) {
               {isUploading ? (
                 <div className="w-6 h-6 border-2 border-gray-400 border-t-blue-500 rounded-full animate-spin"></div>
               ) : (
-                <Icon icon={Camera} alt="Upload" className="w-6 sm:w-8 md:w-10 h-6 sm:h-8 md:h-10 text-gray-500" />
+                <Icon
+                  icon={Camera}
+                  alt="Upload"
+                  className="w-6 sm:w-8 md:w-10 h-6 sm:h-8 md:h-10 text-gray-500"
+                />
               )}
               <input
                 type="file"

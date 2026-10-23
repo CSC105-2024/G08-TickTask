@@ -2,10 +2,14 @@
   "name": "backend",
   "type": "module",
   "scripts": {
-    "dev": "tsx watch src/index.ts"
+    "dev": "tsx watch src/index.ts",
+    "start": "tsx src/index.ts",
+    "test": "node test.mjs"
   },
   "dependencies": {
     "@hono/node-server": "^1.14.0",
+    "@hono/swagger-ui": "0.5.0",
+    "@hono/zod-openapi": "0.18.4",
     "@prisma/client": "^6.7.0",
     "axios": "^1.8.4",
     "bcrypt": "^5.1.1",
@@ -16,6 +20,9 @@
     "jsonwebtoken": "^9.0.2",
     "mysql2": "^3.14.0",
     "nodemailer": "^7.0.3",
+    "swagger-jsdoc": "^6.2.8",
+    "swagger-ui-express": "^5.0.1",
+    "tsx": "^4.7.1",
     "zod": "^3.24.4"
   },
   "devDependencies": {
@@ -24,7 +31,6 @@
     "@types/jsonwebtoken": "^9.0.9",
     "@types/node": "^20.11.17",
     "@types/nodemailer": "^6.4.17",
-    "prisma": "^6.8.1",
-    "tsx": "^4.7.1"
+    "prisma": "^6.8.1"
   }
 }

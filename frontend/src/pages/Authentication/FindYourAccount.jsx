@@ -5,7 +5,7 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import Close from '../../assets/close.svg';
 import { Navigate, NavLink} from 'react-router-dom';
-
+import { apiClient } from '../../util/apiClient';
 function FindYourAccount() {
   const userSchema = z.object({
     email: z.string().email('Please enter a valid email'),
@@ -22,7 +22,6 @@ function FindYourAccount() {
   const [emailNotFound, setEmailNotFound] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const [isClosing, setIsClosing] = useState(false);
-  
   const onSubmit = async (data) => {
     const { email } = data;
     const emailExists = await checkEmailInDatabase(email);
@@ -40,23 +39,10 @@ function FindYourAccount() {
     }
   };
 
-  const checkEmailInDatabase = async (email) => {
+const checkEmailInDatabase = async (email) => {
   try {
-    const response = await fetch('http://localhost:3000/api/users/check-email', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ email }),
-    });
-
-    if (!response.ok) {
-      console.error('Non-OK response:', response.status);
-      return false;
-    }
-
-    const result = await response.json();
-    return result.exists;
+    const response = await apiClient.post('/api/users/check-email', { email });
+    return response.data.exists;
   } catch (error) {
     console.error('Error checking email:', error);
     return false;

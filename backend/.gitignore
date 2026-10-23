@@ -10,10 +10,12 @@
 
 # deps
 node_modules/
-
+src/generated/
 # env
 .env
 .env.production
+
+prisma/dev.db
 
 # logs
 logs/
