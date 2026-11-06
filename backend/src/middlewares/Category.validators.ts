@@ -2,7 +2,7 @@ import type { Context, Next } from 'hono';
 import { z } from 'zod';
 
 export const Category = z.object({
-    Category_Name: z.string().min(1, { message: 'Category name is required' }),
+    Category_Name: z.string().min(1, { error: 'Category name is required' }),
     Category_Color: z.string(),
     Category_Icon: z.string(),
     Category_is_Primary: z.boolean(),
@@ -30,7 +30,7 @@ export async function validateCreateCategory(c: Context, next: Next) {
       if (!result.success) {
         return c.json({
           success: false,
-          errors: result.error.format(),
+          errors: z.treeifyError(result.error),
         }, 400);
       }
       
@@ -56,7 +56,7 @@ export async function validatePatchCategory(c: Context, next: Next) {
         if (!result.success) {
             return c.json({
             success: false,
-            errors: result.error.format(),
+            errors: z.treeifyError(result.error),
             }, 400);
         }
       

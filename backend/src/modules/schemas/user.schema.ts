@@ -8,7 +8,7 @@ import { z } from 'zod';
 import { authMiddleware } from '../middlewares/authenticator.js';
 
 export const checkEmailRequestSchema = z.object({
-  User_Email: z.string().email('Invalid email format'),
+  User_Email: z.email('Invalid email format'),
 });
 export const checkEmailResponseSchema = z.object({
   exists: z.boolean(),
@@ -16,7 +16,7 @@ export const checkEmailResponseSchema = z.object({
   error: z.string().optional(),
 });
 export const loginRequestSchema = z.object({
-  User_Email: z.string().email('Invalid email format'),
+  User_Email: z.email('Invalid email format'),
   User_Password: z.string().min(1, 'Password is required'), 
 });
 export const loginResponseSchema = z.object({
@@ -24,7 +24,7 @@ export const loginResponseSchema = z.object({
   token: z.string().optional(), 
   user: z.object({
     userId: z.number().int().positive(), // Updated strictly to Int to match Prisma
-    User_Email: z.string().email(),
+    User_Email: z.email(),
   }).optional(),
 });
 const userIdParam = z.object({
@@ -37,7 +37,7 @@ const profileSChema = z.object({
 });
 const userSchema = z.object({
     UserID : z.coerce.number().int().positive(),
-    User_Email: z.string().email(),
+    User_Email: z.email(),
     User_Password: z.string().min(7),
 });
 export const safeUserSchema = userSchema.omit({ User_Password: true });

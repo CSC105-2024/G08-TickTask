@@ -37,7 +37,7 @@ export async function validateCreateTask(c: Context, next: Next) {
       if (!result.success) {
         return c.json({
           success: false,
-          errors: result.error.format(),
+          errors: z.treeifyError(result.error),
         }, 400);
       }
       
@@ -59,7 +59,7 @@ export async function validateUpdateTask(c: Context, next: Next) {
       if (!result.success) {
         return c.json({
           success: false,
-          errors: result.error.format(),
+          errors: z.treeifyError(result.error),
         }, 400);
       }
       
@@ -81,7 +81,7 @@ export async function validateUpdateTask(c: Context, next: Next) {
       if (!result.success) {
         return c.json({
           success: false,
-          errors: result.error.format(),
+          errors: z.treeifyError(result.error),
         }, 400);
       }
       

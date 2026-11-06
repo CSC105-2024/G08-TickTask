@@ -8,7 +8,7 @@ import { Navigate, NavLink} from 'react-router-dom';
 
 function FindYourAccount() {
   const userSchema = z.object({
-    email: z.string().email('Please enter a valid email'),
+    email: z.email('Please enter a valid email'),
   });
 
   const {

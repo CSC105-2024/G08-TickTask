@@ -18,7 +18,7 @@ dotenv.config();
 
 const prisma = new PrismaClient();
 const userSchema = z.object({
-  email: z.string().email(),
+  email: z.email(),
   password: z.string().min(7),
 });
 
@@ -27,7 +27,7 @@ export async function createUserController(c: Context) {
   const parsed = userSchema.safeParse(body);
 
   if (!parsed.success) {
-    return c.json({ error: parsed.error.format() }, 400);
+    return c.json({ error: z.treeifyError(parsed.error) }, 400);
   }
 
   const { email, password } = parsed.data;

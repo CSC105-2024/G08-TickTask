@@ -20,7 +20,7 @@ function ResetPassword() {
       confirmPassword: z.string(),
     })
     .refine((data) => data.password === data.confirmPassword, {
-      message: 'Your passwords does not match',
+      error: 'Your passwords does not match',
       path: ['confirmPassword'],
     });
 

@@ -4,16 +4,16 @@ import { createRoute } from "@hono/zod-openapi";
 // Base schemas
 export const userSchema = z.object({
   UserID: z.number(),
-  User_Email: z.string().email(),
+  User_Email: z.email(),
 });
 
 export const signupSchema = z.object({
-  email: z.string().email(),
+  email: z.email(),
   password: z.string().min(6),
 });
 
 export const loginSchema = z.object({
-  email: z.string().email(),
+  email: z.email(),
   password: z.string(),
 });
 
@@ -24,11 +24,11 @@ export const profileUpdateSchema = z.object({
 });
 
 export const emailCheckSchema = z.object({
-  email: z.string().email(),
+  email: z.email(),
 });
 
 export const passwordResetSchema = z.object({
-  email: z.string().email(),
+  email: z.email(),
 });
 
 export const errorResponseSchema = z.object({

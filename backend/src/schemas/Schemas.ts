@@ -16,8 +16,8 @@ export interface Task {
 }
 
 export const categorySchema = z.object({
-  Category_Name: z.string().min(1, { message: 'Category name is required' }),
-  Category_Icon: z.string().min(1, { message: 'Category icon is required' }),
-  Category_Color: z.string().min(1, { message: 'Category color is required' }),
+  Category_Name: z.string().min(1, { error: 'Category name is required' }),
+  Category_Icon: z.string().min(1, { error: 'Category icon is required' }),
+  Category_Color: z.string().min(1, { error: 'Category color is required' }),
   Custom_Color: z.string().optional(), 
 });

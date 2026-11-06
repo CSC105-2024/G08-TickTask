@@ -13,7 +13,7 @@ function Signup() {
   const [showPassword, setShowPassword] = useState(false);
 
   const userSchema = z.object({
-    email: z.string().email('Please enter a valid email'),
+    email: z.email('Please enter a valid email'),
     password: z
       .string()
       .min(7, 'Your password needs to be at least 7 characters.'),

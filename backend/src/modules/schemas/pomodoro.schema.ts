@@ -19,7 +19,7 @@ const sessionSchema = z.object({
   duration_seconds: z.number(),
   remaining_seconds: z.number(),
   timer_type: TimerTypeEnum,
-  last_updated: z.string().datetime(),
+  last_updated: z.iso.datetime(),
 });
 
 const createSessionSchema = z.object({

@@ -6,7 +6,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 
 function ProfileEdit() {
     const userSchema = z.object({
-        email: z.string().email('Please enter a valid email'),
+        email: z.email('Please enter a valid email'),
         password: z.string().min(7, 'Incorrect password!'),
       });
   return (

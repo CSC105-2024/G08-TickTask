@@ -13,7 +13,7 @@ dotenv.config();
 
 const prisma = new PrismaClient();
 const userSchema = z.object({
-    email: z.string().email(),
+    email: z.email(),
     password: z.string().min(7),
   });
   

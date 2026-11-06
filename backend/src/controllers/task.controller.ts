@@ -1,4 +1,5 @@
 import type { Context } from "hono";
+import { z } from "zod";
 import * as TaskModel from "../models/Task.model.js";
 import { PrismaClient } from "../generated/prisma/index.js";
 import { TaskSchema } from "../middlewares/Task.validators.js";
@@ -57,7 +58,7 @@ export const updateTaskController = async (c: Context) => {
   const parsed = TaskSchema.safeParse(body);
 
   if (!parsed.success) {
-    return c.json({ error: parsed.error.format() }, 400);
+    return c.json({ error: z.treeifyError(parsed.error) }, 400);
   }
 
   try {

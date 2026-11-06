@@ -41,7 +41,7 @@ const getTasksByDateRoute = createGetRoute({
     path: '/tasks/date',
     summary: 'Get tasks by date for the authenticated user',
     query: z.object({
-        date: z.string().datetime(),
+        date: z.iso.datetime(),
     }),
     responseSchema: z.array(taskSchema),
     tags: ['Tasks'],
